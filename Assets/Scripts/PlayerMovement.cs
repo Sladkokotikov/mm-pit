@@ -9,10 +9,12 @@ public class PlayerMovement : MonoBehaviour
 {
     private Rigidbody2D _rigidbody;
     private Cooldowns _cooldowns;
+    private SpriteRenderer _spriteRenderer;
     
     private const float RayDistance = 0.1f;
     
     private const float HorizontalVelocity = 7;
+    private const float HorizontalVelocityOnAir = 2;
     private const float JumpVelocity = 8f;
     private const float DashVelocity = 17f;
     
@@ -29,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         _cooldowns = GetComponent<Cooldowns>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
         FaceLeft = false;
         _dashUsed = false;
     }
@@ -37,8 +40,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Mathf.Abs(dir) < 1e-6) return;
         transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.right * dir,
-            HorizontalVelocity * Time.deltaTime);
+                HorizontalVelocity * Time.deltaTime);
         FaceLeft = dir < 0f;
+        _spriteRenderer.flipX = FaceLeft;
     }
 
     private void Jump()

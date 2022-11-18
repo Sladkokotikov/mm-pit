@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.XR;
 
 public class PlayerMovement : MonoBehaviour
@@ -11,19 +12,19 @@ public class PlayerMovement : MonoBehaviour
     private Cooldowns _cooldowns;
     private SpriteRenderer _spriteRenderer;
     
-    private const float RayDistance = 0.1f;
+    [SerializeField] private float rayDistance = 0.1f;
     
-    private const float HorizontalVelocity = 7;
-    private const float HorizontalVelocityOnAir = 2;
-    private const float JumpVelocity = 8f;
-    private const float DashVelocity = 17f;
+    [SerializeField] private float horizontalVelocity = 7;
+    [SerializeField] private float horizontalVelocityOnAir = 2;
+    [SerializeField] private float jumpVelocity = 8f;
+    [SerializeField] private float dashVelocity = 17f;
     
-    private const float DashDuration = 0.2f;
+    [SerializeField] private float dashDuration = 0.2f;
     private float _dashTimer = 0f;
     
     private bool _dashActive = false;
     private bool _onGround;
-    public static bool FaceLeft;
+    public bool FaceLeft { get; private set; }
     private bool _controlActive = true;
     private bool _dashUsed;
 
@@ -40,14 +41,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if (Mathf.Abs(dir) < 1e-6) return;
         transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.right * dir,
-                HorizontalVelocity * Time.deltaTime);
+                horizontalVelocity * Time.deltaTime);
         FaceLeft = dir < 0f;
         _spriteRenderer.flipX = FaceLeft;
     }
 
     private void Jump()
     {
-        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, JumpVelocity);
+        _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, jumpVelocity);
     }
 
     private void DashStart()
@@ -59,14 +60,14 @@ public class PlayerMovement : MonoBehaviour
         _dashActive = true;
         _controlActive = false;
         _rigidbody.gravityScale = 0;
-        _rigidbody.velocity = FaceLeft ? Vector2.left * DashVelocity : Vector2.right * DashVelocity;
+        _rigidbody.velocity = FaceLeft ? Vector2.left * dashVelocity : Vector2.right * dashVelocity;
     }
 
     private void DashUpdate()
     {
         if (!_dashActive) return;
         _dashTimer += Time.deltaTime;
-        if (_dashTimer >= DashDuration)
+        if (_dashTimer >= dashDuration)
             DashEnd();
     }
 
@@ -82,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckGround()
     {
-        RaycastHit2D hit = Physics2D.Raycast(_rigidbody.position, Vector2.down, RayDistance, LayerMask.GetMask("Ground"));
+        RaycastHit2D hit = Physics2D.Raycast(_rigidbody.position, Vector2.down, rayDistance, LayerMask.GetMask("Ground"));
         _onGround = hit.collider;
         if (_onGround)
             _dashUsed = false;

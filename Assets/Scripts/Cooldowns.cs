@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Cooldowns : MonoBehaviour
 {
-    private const float DashCooldown = 0.5f; 
+    [SerializeField] private float dashCooldown = 0.5f; 
     private bool _dashReady;
     private float _dashTimer;
     private void Start()
@@ -21,7 +21,7 @@ public class Cooldowns : MonoBehaviour
     {
         if (_dashReady) return;
         _dashTimer += Time.deltaTime;
-        if (_dashTimer > DashCooldown)
+        if (_dashTimer > dashCooldown)
         {
             _dashReady = true;
         }

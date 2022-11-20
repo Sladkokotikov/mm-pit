@@ -20,8 +20,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool jumping;
     [SerializeField] private bool onGround;
     public bool FaceLeft { get; private set; }
-    private bool _controlActive = true;
     private bool _dashUsed;
+
+    private float _lastHorizontalMove;
+
     private static readonly int Running = Animator.StringToHash("running");
     private static readonly int Jumping = Animator.StringToHash("jumping");
     private static readonly int Dashing = Animator.StringToHash("dashing");
@@ -36,24 +38,35 @@ public class PlayerMovement : MonoBehaviour
         _dashUsed = false;
     }
 
-    private void Move(float dir)
+    private void MoveHorizontally()
     {
-        if (Mathf.Abs(dir) < 1e-6)
+        var dx = Input.GetAxisRaw("Horizontal");
+        if (!onGround)
+        {
+            //_lastHorizontalMove += horizontalVelocityOnAir * dx * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(
+                transform.position,
+                transform.position + Vector3.right * _lastHorizontalMove * horizontalVelocity,
+                horizontalVelocity * Time.deltaTime);
+            return;
+        }
+        
+        _lastHorizontalMove = dx;
+
+        if (Mathf.Abs(dx) < 1e-6)
         {
             _animator.SetBool(Running, false);
             return;
         }
 
         _animator.SetBool(Running, true);
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.right * dir,
-            horizontalVelocity * Time.deltaTime);
-        FaceLeft = dir < 0f;
-        _spriteRenderer.flipX = FaceLeft;
-    }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawRay(_rigidbody.position, Vector3.down * rayDistance);
+        transform.position = Vector3.MoveTowards(
+            transform.position,
+            transform.position + Vector3.right * dx * horizontalVelocity,
+            horizontalVelocity * Time.deltaTime);
+        FaceLeft = dx < 0f;
+        _spriteRenderer.flipX = FaceLeft;
     }
 
     private void Jump()
@@ -68,18 +81,16 @@ public class PlayerMovement : MonoBehaviour
 
         _dashUsed = true;
         _animator.SetBool(Dashing, true);
-        _controlActive = false;
         _rigidbody.gravityScale = 0;
         _rigidbody.velocity = (FaceLeft ? Vector2.left : Vector2.right) * dashVelocity;
 
         StartCoroutine(Extensions.Delay(dashDuration, DashEnd));
     }
-    
+
     private void DashEnd()
     {
         _rigidbody.velocity = Vector2.zero;
         _animator.SetBool(Dashing, false);
-        _controlActive = true;
         _rigidbody.gravityScale = 1;
         _cooldowns.DashCooldownStart();
     }
@@ -99,15 +110,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (!_controlActive) return;
-        Move(Input.GetAxisRaw("Horizontal"));
+        
 
         if (onGround && Input.GetButton("Jump"))
         {
             Jump();
         }
-
         Fall();
+        
+        MoveHorizontally();
+        PullBackHorizontally();
+
+        
         _animator.SetBool(Jumping, jumping);
 
         if (_cooldowns.DashReady && Input.GetKeyDown(KeyCode.LeftShift))
@@ -116,8 +130,17 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void PullBackHorizontally()
+    {
+        var hit = Physics2D.Raycast(_rigidbody.position, Vector2.down, rayDistance, LayerMask.GetMask("Walls"));
+        if(hit.collider)
+            _rigidbody.MovePosition(_rigidbody.position + 3 * Vector2.right * (FaceLeft?1:-1));
+    }
+
     private void Fall()
     {
         jumping = !onGround;
+        if (onGround)
+            _lastHorizontalMove = 0;
     }
 }

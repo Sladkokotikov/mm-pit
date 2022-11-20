@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using UnityEngine;
 
 public static class Extensions
 {
@@ -8,5 +10,11 @@ public static class Extensions
     {
         change(source);
         return source;
+    }
+
+    public static IEnumerator Delay(float duration, Action action)
+    {
+        yield return new WaitForSeconds(duration);
+        action();
     }
 }

@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     public bool FaceLeft { get; private set; }
     private bool _dashUsed;
 
-    private float _lastHorizontalMove;
+    [SerializeField] private float lastHorizontalMove;
 
     private static readonly int Running = Animator.StringToHash("running");
     private static readonly int Jumping = Animator.StringToHash("jumping");
@@ -43,15 +43,15 @@ public class PlayerMovement : MonoBehaviour
         var dx = Input.GetAxisRaw("Horizontal");
         if (!onGround)
         {
-            //_lastHorizontalMove += horizontalVelocityOnAir * dx * Time.deltaTime;
+            lastHorizontalMove += horizontalVelocityOnAir * dx * Time.deltaTime;
             transform.position = Vector3.MoveTowards(
                 transform.position,
-                transform.position + Vector3.right * _lastHorizontalMove * horizontalVelocity,
+                transform.position + Vector3.right * lastHorizontalMove * horizontalVelocity,
                 horizontalVelocity * Time.deltaTime);
-            return;
         }
         
-        _lastHorizontalMove = dx;
+        if(onGround)
+            lastHorizontalMove = dx;
 
         if (Mathf.Abs(dx) < 1e-6)
         {
@@ -60,12 +60,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         _animator.SetBool(Running, true);
-
+        var velocity = onGround ? horizontalVelocity : horizontalVelocityOnAir;
         transform.position = Vector3.MoveTowards(
             transform.position,
-            transform.position + Vector3.right * dx * horizontalVelocity,
-            horizontalVelocity * Time.deltaTime);
+            transform.position + Vector3.right * dx * velocity,
+            velocity * Time.deltaTime);
         FaceLeft = dx < 0f;
+        
         _spriteRenderer.flipX = FaceLeft;
     }
 
@@ -141,6 +142,6 @@ public class PlayerMovement : MonoBehaviour
     {
         jumping = !onGround;
         if (onGround)
-            _lastHorizontalMove = 0;
+            lastHorizontalMove = 0;
     }
 }

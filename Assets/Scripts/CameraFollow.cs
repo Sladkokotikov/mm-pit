@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+[DefaultExecutionOrder(100)]
 public class CameraFollow : MonoBehaviour
 {
     private PlayerMovement _playerMovement;
@@ -24,7 +24,7 @@ public class CameraFollow : MonoBehaviour
         transform.position = new Vector3(_playerTransform.position.x + offset.x, _playerTransform.position.y + offset.y, transform.position.z);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Vector3 target;
         if (_playerMovement.FaceLeft)
@@ -35,6 +35,6 @@ public class CameraFollow : MonoBehaviour
         {
             target = new Vector3(_playerTransform.position.x + offset.x, _playerTransform.position.y + offset.y, transform.position.z);
         }
-        transform.position = Vector3.Lerp(transform.position, target, damping * Time.deltaTime);
+        transform.position = Vector3.Lerp(transform.position, target, damping * Time.fixedDeltaTime);
     }
 }

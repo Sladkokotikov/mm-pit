@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8e27fd5020cda6b4a86c90a599c3a62b
+guid: e7c1e9e29bf206e44abc2b881c8ad933
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -101,29 +101,17 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: attack_0
+      name: worm death_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 52
-        height: 39
+        width: 34
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 09c315d7d4a196d41829e118bbef1b7d
-      internalID: 1698203555
+      spriteID: 06fd8a4a4eb25514c98d2288425f29d9
+      internalID: 1506149292
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_1
+      name: worm death_1
       rect:
         serializedVersion: 2
-        x: 52
+        x: 34
         y: 0
-        width: 52
-        height: 39
+        width: 34
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -152,20 +140,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a13b0032b77a3064db9d6e5f68bad2d0
-      internalID: -993869938
+      spriteID: 9b59a04c645c5234cb9078b2ec7aee89
+      internalID: 634228337
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_2
+      name: worm death_2
       rect:
         serializedVersion: 2
-        x: 104
+        x: 68
         y: 0
-        width: 52
-        height: 39
+        width: 34
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -173,20 +161,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d23340be72e9c2946acc465d89c36377
-      internalID: 1190483816
+      spriteID: 535e295055ba3ec44a1d81a5633afef8
+      internalID: 1752156614
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_3
+      name: worm death_3
       rect:
         serializedVersion: 2
-        x: 156
+        x: 102
         y: 0
-        width: 52
-        height: 39
+        width: 34
+        height: 34
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,8 +182,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a569b895f05474b40905e14cfb1b5ae9
-      internalID: -1044271638
+      spriteID: 5eb826c448c378a48986ee94f27758e1
+      internalID: 455459722
       vertices: []
       indices: 
       edges: []
@@ -211,10 +199,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      attack_2: 1190483816
-      attack_1: -993869938
-      attack_3: -1044271638
-      attack_0: 1698203555
+      worm death_0: 1506149292
+      worm death_1: 634228337
+      worm death_2: 1752156614
+      worm death_3: 455459722
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

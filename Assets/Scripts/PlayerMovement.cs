@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
 
     [SerializeField] private float rayDistance = 0.1f;
+    [SerializeField] private float attackDistance = 2f;
     [SerializeField] private float gravityForce = 1;
     [SerializeField] private float damping = 0.3f;
 
@@ -23,9 +24,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpVelocity = 8f;
     [SerializeField] private float dashVelocity = 17f;
     [SerializeField] private float dashDuration = 0.2f;
-    
+
     [SerializeField] private Vector2 velocity;
-    
+
     [SerializeField] private bool jumping;
     [SerializeField] private bool onGround;
     public bool FaceLeft { get; private set; }
@@ -38,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     private static readonly int Running = Animator.StringToHash("running");
     private static readonly int Jumping = Animator.StringToHash("jumping");
     private static readonly int Dashing = Animator.StringToHash("dashing");
+    private static readonly int Attack1 = Animator.StringToHash("attack");
 
     private void Start()
     {
@@ -48,7 +50,6 @@ public class PlayerMovement : MonoBehaviour
         FaceLeft = false;
         _dashUsed = false;
         _rigidbody.gravityScale = 0;
-
     }
 
     private void MoveHorizontally()
@@ -65,7 +66,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void MoveAndJump(float dx)
     {
-        lastHorizontalMove = Mathf.Clamp(lastHorizontalMove + horizontalVelocityOnAir * dx * Time.fixedDeltaTime, -1, 1);
+        lastHorizontalMove =
+            Mathf.Clamp(lastHorizontalMove + horizontalVelocityOnAir * dx * Time.fixedDeltaTime, -1, 1);
         Move(lastHorizontalMove * horizontalVelocity);
 
         lastHorizontalMove *= 1 - normalizationVelocity * Time.fixedDeltaTime;
@@ -84,10 +86,10 @@ public class PlayerMovement : MonoBehaviour
             _animator.SetBool(Running, false);
             return;
         }
+
         _animator.SetBool(Running, true);
-        
+
         Move(dx * horizontalVelocity);
-        
     }
 
     private void Move(float deltaMove)
@@ -98,11 +100,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyGravity()
     {
-        if (_dashActive) 
+        if (_dashActive)
         {
             velocity.y = 0f;
             return;
         }
+
         if (!onGround)
             velocity.y -= gravityForce * Time.fixedDeltaTime;
         else
@@ -137,6 +140,7 @@ public class PlayerMovement : MonoBehaviour
         _animator.SetBool(Dashing, false);
         _activeControl = true;
         _dashActive = false;
+        _dashUsed = false;
         lastHorizontalMove =
             (FaceLeft ? -1 : 1) * Mathf.Min(Mathf.Abs(impulseAfterDash), Mathf.Abs(lastHorizontalMove));
         _cooldowns.DashCooldownStart();
@@ -144,8 +148,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void CheckGround()
     {
-        var hit = Physics2D.Raycast(_rigidbody.position, Vector2.down, rayDistance, LayerMask.GetMask("Ground"));
-        onGround = hit.collider;
+        var layers = new[] {"Ground", "Enemy"};
+        onGround = Physics2D.Raycast(_rigidbody.position, Vector2.down, rayDistance, LayerMask.GetMask(layers))
+            .collider;
         if (onGround)
             _dashUsed = false;
     }
@@ -160,6 +165,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 Jump();
             }
+
             Fall();
             MoveHorizontally();
             _animator.SetBool(Jumping, jumping);
@@ -169,10 +175,31 @@ public class PlayerMovement : MonoBehaviour
                 DashStart();
             }
         }
-        
+
         _rigidbody.MovePosition(_rigidbody.position + velocity * Time.fixedDeltaTime);
         if (!_dashActive)
             velocity.x *= (1 - damping * Time.fixedDeltaTime);
+
+        if (Input.GetKeyDown(KeyCode.Z))
+            Attack();
+    }
+
+    private void Attack()
+    {
+        _animator.SetTrigger(Attack1);
+        var hit = Physics2D.BoxCast(_rigidbody.position, Vector2.one, 0, (FaceLeft ? -1 : 1) * Vector2.right, attackDistance, LayerMask.GetMask("Enemy"));
+        
+        if (hit.collider)
+        {
+            hit.transform.GetComponent<Enemy>().Die();
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(_rigidbody.position, (FaceLeft ? -1 : 1) * Vector2.right * attackDistance);
+        
+
     }
 
 

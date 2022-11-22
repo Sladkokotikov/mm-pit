@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8e27fd5020cda6b4a86c90a599c3a62b
+guid: c19e9cd59ff75a14580fa36c53e3b007
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -101,101 +101,110 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: attack_0
+      name: worm walk_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 52
-        height: 39
+        width: 34
+        height: 34
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 09c315d7d4a196d41829e118bbef1b7d
-      internalID: 1698203555
+      spriteID: 05055c44347985e4eb85bd1ba6d511e4
+      internalID: -963922529
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_1
+      name: worm walk_1
       rect:
         serializedVersion: 2
-        x: 52
+        x: 34
         y: 0
-        width: 52
-        height: 39
+        width: 34
+        height: 34
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a13b0032b77a3064db9d6e5f68bad2d0
-      internalID: -993869938
+      spriteID: 75a57ee18c5386840b67502642f171e5
+      internalID: -1005982929
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_2
+      name: worm walk_2
       rect:
         serializedVersion: 2
-        x: 104
+        x: 68
         y: 0
-        width: 52
-        height: 39
+        width: 34
+        height: 34
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d23340be72e9c2946acc465d89c36377
-      internalID: 1190483816
+      spriteID: 38c80c5cf4724d94e8322866424860ee
+      internalID: 1891764522
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: attack_3
+      name: worm walk_3
       rect:
         serializedVersion: 2
-        x: 156
+        x: 102
         y: 0
-        width: 52
-        height: 39
+        width: 34
+        height: 34
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a569b895f05474b40905e14cfb1b5ae9
-      internalID: -1044271638
+      spriteID: fd36ce41f07ea7841a1f03e43e74f821
+      internalID: -1131716534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: worm walk_4
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 0
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c5f6035a898f0545a7e76247e7dfd25
+      internalID: -1037742655
       vertices: []
       indices: 
       edges: []
@@ -211,10 +220,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      attack_2: 1190483816
-      attack_1: -993869938
-      attack_3: -1044271638
-      attack_0: 1698203555
+      worm walk_4: -1037742655
+      worm walk_3: -1131716534
+      worm walk_2: 1891764522
+      worm walk_0: -963922529
+      worm walk_1: -1005982929
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
